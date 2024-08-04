@@ -112,6 +112,7 @@ const fetchuser=(req,res,next)=>{
 //schema module
 const image=new mongoose.Schema({image_url:String})
 const Offer= new mongoose.Schema({
+  user:mongoose.Schema.Types.ObjectId,
     name:String,
     price:Number,
     image:String,
@@ -124,7 +125,7 @@ app.post("/addoffer",async(req,res)=>{
     
 
     const offer=new Schema({
-        
+        user:req.body.user,
         name:req.body.name,
         price:req.body.price,
         image:req.body.image,
@@ -149,6 +150,7 @@ app.get("pkl/:category",async(req,res)=>{
 app.get("/getofferbysearch/:search",fetchuser,async(req,res)=>{
     res.send(await Schema.find({name:{$regex:req.params.search}}))})
 const application=new mongoose.Schema({
+    user:mongoose.Schema.Types.ObjectId,
     image:image,
     name:String,
     email:String,
@@ -164,7 +166,7 @@ const application=new mongoose.Schema({
 const Application=new mongoose.model("Application",application);
 app.post("/application",async(req,res)=>{
     const application=new Application({
-        
+        user:req.body.user,
         // image:req.body.image,
         name:req.body.name,
         email:req.body.email,
